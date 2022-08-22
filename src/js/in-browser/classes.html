@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes vs Factory functions</title>
+</head>
+<body>
+  <button id="cta_class">bark me using a class!</button>
+  <button id="cta_factory">bark me using a factory!</button>
+  <p id="output"></p>
+
+  <script>
+    const output = document.getElementById('output')
+    const cta_class = document.getElementById('cta_class')
+    const cta_factory = document.getElementById('cta_factory')
+
+    class Dog {
+      constructor(sound) {
+        this.sound = sound
+      }
+      bark() {
+        console.log(this.sound)
+        output.innerHTML = this.sound
+      }
+    }
+    const doggie = new Dog('woof')
+    // doggie.bark() // Prints 'woof' to the console
+
+    // cta_class.addEventListener('click', doggie.bark) // Prints undefined
+    // cta_class.addEventListener('click', doggie.bark()) // Prints 'woof' but is executed when the listener is just created (wrong time)
+    // cta_class.addEventListener('click', doggie.bark.bind(doggie)) // Prints 'woof' but is very verbose
+    cta_class.addEventListener('click', _ => doggie.bark()) // Prints 'woof' (Pseudo-Factory version)
+
+    // Or you can create a factory function that returns an object
+    const dogFactory = (sound) => {
+      return {
+        bark: () => {
+          console.log(sound)
+          output.innerHTML = sound
+        }
+      }
+    }
+    const roonie = dogFactory('woof woof woof!')
+    cta_factory.addEventListener('click', roonie.bark)
+  </script>
+</body>
+</html>

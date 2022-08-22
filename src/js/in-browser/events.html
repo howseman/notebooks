@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      height: 100vh;
+      width: 100vw;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+    }
+    .outer {
+      background-color: green;
+      border-radius: 50%;
+      box-shadow: 0 0 4px 4px rgba(0, 0, 0, .2);
+      cursor: pointer;
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    .inner {
+      background-color: yellow;
+      border-radius: 50%;
+      box-shadow: 0 0 4px 4px rgba(0, 0, 0, .2);
+      cursor: pointer;
+      height: 100px;
+      width: 100px;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+    }
+  </style>
+</head>
+<body>
+  <a href="https://www.google.com">Go to Google</a>
+  <div class="outer">
+    <div class="inner">
+    </div>
+  </div>
+  <!-- <form action="#" method="post">
+    <input type="checkbox" name="chk1" id="chk1" readonly checked>
+    <button type="button" id="btn">Test It!</button>
+  </form> -->
+  <script>
+    var a = document.querySelector('a');
+    a.addEventListener(
+      'click',
+      (e) => {
+        e.preventDefault(); // This is overriden by { passive: true } as third event listener param
+        return;
+      },
+      { passive: true }
+    );
+
+    var body = document.body;
+    var outer = document.querySelector('.outer');
+    var inner = document.querySelector('.inner');
+
+    body.addEventListener('click', function(e) {
+      console.log('body clicked', e);
+      // console.dir(this);
+    }, { capture: true, once: true });
+
+    outer.addEventListener('click', function(e) {
+      console.log('outer container clicked', e);
+      // console.dir(this);
+    }, false);
+    // outer.addEventListener('mouseenter', () => {
+    //   console.log('over outer div');
+    // }, false);
+    // outer.addEventListener('mouseleave', () => {
+    //   console.log('went out of outer div');
+    // }, false);
+
+    inner.addEventListener('click', function(e) {
+      console.log('inner container clicked', e);
+      // e.stopPropagation();
+      // console.dir(this);
+    }, true);
+    // inner.addEventListener('mouseenter', () => {
+    //   console.log('over inner div');
+    // }, true);
+    // inner.addEventListener('mouseleave', () => {
+    //   console.log('went out of inner div');
+    // }, true);
+
+    // var cbx = document.getElementById('chk1');
+    // var btn = document.getElementById('btn');
+
+    // cbx.addEventListener('change', function(e) { console.log('Changed!', e); })
+    // cbx.addEventListener('click', function(e) {
+    //   if (e.target.readOnly) {
+    //     e.preventDefault();
+    //   }
+    //   console.log('Clicked!');
+    // });
+
+    // btn.addEventListener('click', testIt);
+
+    // function testIt(e) {
+    //   console.log('e', cbx.checked);
+    // }
+  </script>
+</body>
+</html>
